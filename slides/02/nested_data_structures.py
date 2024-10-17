@@ -84,3 +84,21 @@ shopping_cart: ShoppingCart = [
 # Print cart details
 for product, quantity in shopping_cart:
     print(f"Product: {list(product)[0]}, Quantity: {quantity}")
+
+
+# Example 7: Dictionary Keys with a Twist (tuples)
+student_data: Dict[Tuple[str, str], float] = {
+    ("John", "Doe"): 3.8,
+    ("Jane", "Smith"): 4.0,
+    ("Bob", "Johnson"): 3.9
+}
+
+# Print student data
+for name, score in student_data.items():
+    print(f"Name: {name[0]} {name[1]}, Score: {score}")
+
+# Example 8: Need a unique list of items without duplicates?
+mixed_numbers: List[int] = [1, 2, 2, 3, 1, 4]
+unique_numbers: Set[int] = set(mixed_numbers)  # Remove duplicates
+unique_list: List[int] = list(unique_numbers)  # Convert back to list
+print(unique_list)
