@@ -4,10 +4,6 @@ from typing import Union
 # Create a set
 fruits: set[str] = {"apple", "banana", "cherry"}
 print(fruits)  # Output: {'apple', 'banana', 'cherry'}
-fruits: set[str] = set(["apple", "banana", "cherry"])
-print(fruits)  # Output: {'apple', 'banana', 'cherry'}
-fruits: set[str] = set({"apple", "banana", "cherry"})
-print(fruits)  # Output: {'apple', 'banana', 'cherry'}
 
 # Create a set with multiple types
 multiple_types_set: set[Union[str, int]] = {"apple", 1, "banana", 2, "cherry", 3}

@@ -17,11 +17,11 @@ def classify_growth(
     return (country, category)
 
 # Example usage
-result = classify_growth("USA", 2.3)
+result = classify_growth("USA", 0.023)
 print(f"{result[0]} economy: {result[1]}")
 
 # Looping
-def calculate_compound_interest(
+def calculate_compound_interest_for_loop(
     principal: float,
     rate: float,
     years: int
@@ -32,8 +32,24 @@ def calculate_compound_interest(
         balance.append(round(new_balance, 2))
     return balance
 
+def calculate_compound_interest_while_loop(
+    principal: float,
+    rate: float,
+    years: int
+) -> List[float]:
+    balance: List[float] = [principal]
+    year: int = 0
+    while year <= years:
+        new_balance = balance[-1] * (1 + rate)
+        balance.append(round(new_balance, 2))
+        year += 1
+    return balance
+
 # Example usage
-result = calculate_compound_interest(1000, 0.05, 10)
+result = calculate_compound_interest_for_loop(1000, 0.05, 10)
+for year, amount in enumerate(result):
+    print(f"Year {year}: ${amount:.2f}")
+result = calculate_compound_interest_while_loop(1000, 0.05, 10)
 for year, amount in enumerate(result):
     print(f"Year {year}: ${amount:.2f}")
 
@@ -53,6 +69,9 @@ print(evens)
 tuples = [(x, x + 1) for x in range(10) if x % 2 == 0]
 print(tuples)
 
+# Functions
+# Lists are ordered collections of elements.
+# You can iterate through them with a for loop.
 def list_iteration(prices: list[float]) -> None:
     for price in prices:
         print(f"Price: ${price}")

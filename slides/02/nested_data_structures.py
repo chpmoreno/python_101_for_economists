@@ -19,7 +19,7 @@ print(f"GDP of {economic_data[0][0]}: ${economic_data[0][1]} trillion")
 # Use case: Storing time series data for multiple indicators.
 historical_data: Dict[str, List[float]] = {
     "inflation_rate": [1.4, 1.7, 1.9, 2.3, 2.1],
-    "gdp_growth": [2.3, 2.9, 2.3, 2.2, 2.0],
+    "gross_domestic_product_growth": [2.3, 2.9, 2.3, 2.2, 2.0],
     "unemployment": [3.9, 3.7, 3.6, 3.5, 3.6]
 }
 
@@ -43,6 +43,7 @@ forex_pairs: Set[Tuple[str, str]] = {
 
 students: List[Dict[str, str]] = [
     {"id": "001", "name": "Alice", "subject": "Economics"},
+    {"id": "002", "name": "Bob", "subject": "Statistics"},
     {"id": "002", "name": "Bob", "subject": "Statistics"}
 ]
 
