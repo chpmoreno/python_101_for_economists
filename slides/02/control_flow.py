@@ -82,8 +82,8 @@ def dict_iteration(economic_data: dict[str, float]) -> None:
     for key, value in economic_data.items():
         print(f"{key}: {value}")
 
-economic_data = {"GDP": 21000.5, "Inflation": 2.3, "Unemployment": 5.1}
-dict_iteration(economic_data)
+economic_data_dictionary = {"GDP": 21000.5, "Inflation": 2.3, "Unemployment": 5.1}
+dict_iteration(economic_data_dictionary)
 
 # enumerate function
 fruits = ["apple", "banana", "orange"]
@@ -91,7 +91,7 @@ for index, fruit in enumerate(fruits):
     print(index, fruit)
 
 # zip function
-countries = ["France", "Japan", "Germany"]
-prices = [12.99, 19.99, 3.50]
-for country, price in zip(countries, prices):
-    print(f"{country}: ${price}")
+countries_list = ["France", "Japan", "Germany"]
+prices_list = [12.99, 19.99, 3.50]
+for country_value, price_value in zip(countries_list, prices_list):
+    print(f"{country_value}: ${price_value}")
