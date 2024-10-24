@@ -97,7 +97,7 @@ def read_json_file(file_path: str) -> List[Dict[str, Any]]:
     return data
 
 # Save to CSV
-def save_to_csv(
+def write_csv(
         list_of_dictionaries: List[Dict[str, Any]],
         file_path: str
     ) -> None:
@@ -108,7 +108,13 @@ def save_to_csv(
         writer.writerows(list_of_dictionaries)
 
 students_json_data = read_json_file(file_path=f"{FOLDER_PATH}/slides/02/files/courseid_77298_participants.json")
-save_to_csv(
+
+write_csv(
     list_of_dictionaries=students_json_data,
     file_path = f"{FOLDER_PATH}/slides/02/files/courseid_77298_participants_2.csv"
 )
+
+def write_json(file_path: str, data: Dict[str, Any]) -> None:
+    """Writes a dictionary to a JSON file."""
+    with open(file_path, mode='w', encoding='utf-8') as file:
+        json.dump(data, file, indent=4)
