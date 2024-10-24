@@ -46,15 +46,15 @@ def write_file(file_name: str, content: List[str]) -> None:
 # Write examples
 def write_hello_world_write() -> None:
     with open(
-        file="/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/slides/02/files/hello_world_write_output.txt",
+        file=f"{FOLDER_PATH}/slides/02/files/hello_world_write_output.txt",
         mode="w",
         encoding="utf-8"
     ) as file:
-        file.write("Hello, world!\nHello again!")
+        file.write("Hello, world! Hello again!")
 
 def write_hello_world_writelines() -> None:
     with open(
-        file="/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/slides/02/files/hello_world_writelines_output.txt",
+        file=f"{FOLDER_PATH}/slides/02/files/hello_world_writelines_output.txt",
         mode="w",
         encoding="utf-8"
     ) as file:
@@ -95,6 +95,9 @@ def read_json_file(file_path: str) -> List[Dict[str, Any]]:
     except FileNotFoundError:
         print(f"The file {file_path} does not exist.")
     return data
+
+students = read_csv_file(file_path=f"{FOLDER_PATH}/slides/02/files/courseid_77298_participants.csv")
+print(students)
 
 # Save to CSV
 def write_csv(
