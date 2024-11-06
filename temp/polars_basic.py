@@ -128,4 +128,4 @@ correlation = real_estate_data_frame.select(pl.col("SalePrice", "LotArea")).corr
 print("\nCorrelation between SalePrice and LotArea:")
 print(correlation)
 
-#TODO: Theory Homework - Translate this code to pandas. Which code is cleaner? Which library easier to learn?
+# Theory Homework (TODO) - Translate this code to pandas. Which code is cleaner?
