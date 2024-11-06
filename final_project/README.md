@@ -14,6 +14,20 @@ The project will use the Ames Housing dataset. This dataset covers a wealth of f
 - Practice clean code principles and type hints
 - Utilize modern data analysis libraries
 
+### 1.2 Delivery date:
+Students must submit their final project by Sunday, December 15, 2024, before 23:59:59.
+
+### 1.3 Delivery format:
+One designated member of the group should email a link to a Google Drive folder containing the completed project code to josefernando.moreno@upf.edu. Ensure that the folder permissions allow for viewing and downloading. Please include the names of all group members in the email for easy identification.
+
+For an **additional bonus of +1 point** on the final grade, you can also create a GitHub repository for the project. This repository should include the complete code. To qualify for the bonus:
+
+- Ensure that all code and project assets are uploaded and well-organized within the repository.
+- Use Git for version control, with meaningful commit messages that document key stages of your project’s development.
+- Instead of the Google Drive link share the link to the GitHub repository in the email.
+
+*Taking this extra step will not only enhance the structure and presentation of your project but also give you practical experience with Git and GitHub, valuable tools in collaborative development.*
+
 ## 2. The dataset
 
 The dataset was taken from the [Kaggle](https://www.kaggle.com/) competition ["House Prices - Advanced Regression Techniques"](https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/overview) which challenges participants to predict residential housing prices based on a variety of features. The dataset includes information on 79 explanatory variables, which capture various aspects of residential homes, such as the number of rooms, square footage, neighborhood, and quality of materials used. 
@@ -73,16 +87,18 @@ real_estate_toolkit/
         └── main.py
 ```
 
-In this part of the project you can't use Polars.
+**In this part of the project you can't use Polars.**
 
 #### 3.1.1: Project Initialization (5%)
 Use poetry to initialize your project. Remember that if you need or are planing to use other libraries you need to add them. Here it is a basic setup example:
 
 ```bash
+poetry config virtualenvs.in-project true
 poetry new real_estate_toolkit
 cd real_estate_toolkit
 poetry add numpy polars plotly scikit-learn
 poetry add pytest --group dev
+poetry install --no-root
 ```
 
 With these commands, you should get a `pyproject.toml` file like this. Add your group member names and emails.
@@ -93,12 +109,19 @@ name = "real_estate_toolkit"
 version = "0.1.0"
 description = "A toolkit for real estate data analysis"
 authors = ["Student Name <student@email.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
 ...
 
 [tool.poetry.group.dev.dependencies]
 ..
+```
+
+Remember that you can use your virtual env with the following command:
+
+```bash
+poetry shell
 ```
 
 #### 3.1.2: Create Data Base Classes and Functions (20%)
