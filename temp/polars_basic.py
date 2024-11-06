@@ -1,3 +1,4 @@
+"""Polars basic usage"""
 import polars as pl
 
 # Define the file path for clarity
