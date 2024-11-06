@@ -3,7 +3,6 @@ import polars as pl
 # Define the file path for clarity
 FILE_PATH: str = "/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/final_project/data_files/train.csv"
 
-
 # STEP 1: Load and Inspect the Data
 
 #real_estate_data_frame = pl.read_csv(FILE_PATH)
@@ -127,3 +126,5 @@ print(grouped_expansion)
 correlation = real_estate_data_frame.select(pl.col("SalePrice", "LotArea")).corr()
 print("\nCorrelation between SalePrice and LotArea:")
 print(correlation)
+
+#TODO: Theory Homework - Translate this code to pandas. Which code is cleaner? Which library easier to learn?
