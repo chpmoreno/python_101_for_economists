@@ -1,13 +1,13 @@
 """Polars basic usage"""
 import polars as pl
 
-# Define the file path for clarity
-FILE_PATH: str = "/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/final_project/data_files/train.csv"
-
 # STEP 1: Load and Inspect the Data
 
 #real_estate_data_frame = pl.read_csv(FILE_PATH)
-real_estate_data_frame = pl.read_csv(FILE_PATH, null_values=["NA"])
+real_estate_data_frame = pl.read_csv(
+    source="/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/final_project/data_files/train.csv",
+    null_values=["NA"]
+)
 print(real_estate_data_frame)
 
 # Preview the data
@@ -128,4 +128,13 @@ correlation = real_estate_data_frame.select(pl.col("SalePrice", "LotArea")).corr
 print("\nCorrelation between SalePrice and LotArea:")
 print(correlation)
 
+# Write data to multiple formats
+DATA_OUTPUT_PATH = "/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/temp/data_output/"
+real_estate_data_frame.write_csv(f"{DATA_OUTPUT_PATH}/real_estate_data.csv")
+real_estate_data_frame.write_json(f"{DATA_OUTPUT_PATH}/real_estate_data.json")
+real_estate_data_frame.write_avro(f"{DATA_OUTPUT_PATH}/real_estate_data.avro")
+real_estate_data_frame.write_parquet(f"{DATA_OUTPUT_PATH}/real_estate_data.parquet")
+real_estate_data_frame.write_excel(f"{DATA_OUTPUT_PATH}/real_estate_data.xlsx")
+
+# Theory Homework (TODO) - What is avro and parquet? Advantages and disadvantages?
 # Theory Homework (TODO) - Translate this code to pandas. Which code is cleaner?
