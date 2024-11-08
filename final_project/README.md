@@ -94,11 +94,11 @@ Use poetry to initialize your project. Remember that if you need or are planing 
 
 ```bash
 poetry config virtualenvs.in-project true
-poetry new real_estate_toolkit
+poetry new real_estate_toolkit --src
 cd real_estate_toolkit
 poetry add numpy polars plotly scikit-learn
 poetry add pytest --group dev
-poetry install --no-root
+poetry install
 ```
 
 With these commands, you should get a `pyproject.toml` file like this. Add your group member names and emails.
