@@ -70,6 +70,7 @@ Participants of the competition are tasked with building a model that accurately
 real_estate_toolkit/
 ├── pyproject.toml
 ├── README.md
+├── .venv/
 └── src/
     └── real_estate_toolkit/
         ├── __init__.py
@@ -90,15 +91,15 @@ real_estate_toolkit/
 **In this part of the project you can't use Polars.**
 
 #### 3.1.1: Project Initialization (5%)
-Use poetry to initialize your project. Remember that if you need or are planing to use other libraries you need to add them. Here it is a basic setup example:
+Use poetry to initialize your project. Remember that if you need or are planning to use other libraries, you need to add them. Here is a basic setup example:
 
 ```bash
 poetry config virtualenvs.in-project true
-poetry new real_estate_toolkit
+poetry new real_estate_toolkit --src
 cd real_estate_toolkit
 poetry add numpy polars plotly scikit-learn
 poetry add pytest --group dev
-poetry install --no-root
+poetry install
 ```
 
 With these commands, you should get a `pyproject.toml` file like this. Add your group member names and emails.
@@ -109,7 +110,6 @@ name = "real_estate_toolkit"
 version = "0.1.0"
 description = "A toolkit for real estate data analysis"
 authors = ["Student Name <student@email.com>"]
-package-mode = false
 
 [tool.poetry.dependencies]
 ...
@@ -458,10 +458,10 @@ class Simulation:
     years: int
     annual_income: AnnualIncomeStatistics
     children_range: ChildrenRange
+    cleaning_market_mechanism: CleaningMarketMechanism
     down_payment_percentage: float = 0.2
     saving_rate: float = 0.3
     interest_rate: float = 0.05
-    order: 
     
     def create_housing_market(self):
         """
