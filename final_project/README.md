@@ -458,10 +458,10 @@ class Simulation:
     years: int
     annual_income: AnnualIncomeStatistics
     children_range: ChildrenRange
+    cleaning_market_mechanism: CleaningMarketMechanism
     down_payment_percentage: float = 0.2
     saving_rate: float = 0.3
     interest_rate: float = 0.05
-    order: 
     
     def create_housing_market(self):
         """
