@@ -70,6 +70,7 @@ Participants of the competition are tasked with building a model that accurately
 real_estate_toolkit/
 ├── pyproject.toml
 ├── README.md
+├── .venv/
 └── src/
     └── real_estate_toolkit/
         ├── __init__.py
@@ -90,7 +91,7 @@ real_estate_toolkit/
 **In this part of the project you can't use Polars.**
 
 #### 3.1.1: Project Initialization (5%)
-Use poetry to initialize your project. Remember that if you need or are planing to use other libraries you need to add them. Here it is a basic setup example:
+Use poetry to initialize your project. Remember that if you need or are planning to use other libraries, you need to add them. Here is a basic setup example:
 
 ```bash
 poetry config virtualenvs.in-project true
@@ -109,7 +110,6 @@ name = "real_estate_toolkit"
 version = "0.1.0"
 description = "A toolkit for real estate data analysis"
 authors = ["Student Name <student@email.com>"]
-package-mode = false
 
 [tool.poetry.dependencies]
 ...
