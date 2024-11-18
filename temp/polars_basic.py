@@ -6,7 +6,7 @@ import polars as pl
 #real_estate_data_frame = pl.read_csv(FILE_PATH)
 real_estate_data_frame = pl.read_csv(
     source="/Users/jose.moreno/Documents/Other/UPF/python_101_for_economists/final_project/data_files/train.csv",
-    null_values=["NA"]
+    null_values=["NA", "null", ""]
 )
 print(real_estate_data_frame)
 
@@ -52,13 +52,17 @@ print(real_estate_data_frame_filtered.describe())
 
 # STEP 2: Cleaning the Data
 
-# Convert "Id" column to integer
-real_estate_data_frame = real_estate_data_frame.with_columns(pl.col("Id").cast(pl.Int64))
-print("\nSchema with Id as integer:")
+# Convert "Id" column to string
+real_estate_data_frame = real_estate_data_frame.with_columns(pl.col("Id").cast(pl.String))
+print("\nSchema with Id as string:")
 print(real_estate_data_frame.schema)
 
 # Rename column Id to id
-real_estate_data_frame = real_estate_data_frame.rename({"Id": "id"})
+real_estate_data_frame = real_estate_data_frame.rename(
+    {
+        "Id": "id",
+    }
+)
 print("\nSchema with Id renamed as id:")
 print(real_estate_data_frame.schema)
 
@@ -95,6 +99,17 @@ real_estate_data_frame = real_estate_data_frame.with_columns(
 print("\nData with added NormalSale column:")
 print(real_estate_data_frame.describe())
 
+# Conditionals to create new columns
+real_estate_data_frame = real_estate_data_frame.with_columns(
+    pl.when(pl.col("SoldAge") < 5).then(pl.lit("New"))
+    .when(pl.col("SoldAge") < 15).then(pl.lit("Normal"))
+    .when(pl.col("SoldAge") < 50).then(pl.lit("Old"))
+    .when(pl.col("SoldAge").is_null()).then(pl.lit("Unknown"))
+    .otherwise(pl.lit("Monument")).alias("AgeCondition")
+)
+print("\nData with added AgeCondition column:")
+print(real_estate_data_frame["AgeCondition"].describe())
+
 # Select specific columns
 real_estate_data_frame_selected_columns = real_estate_data_frame.select(["id", "SalePrice", "ActualAge", "SoldAge"])
 print("\nData with selected columns:")
@@ -107,7 +122,6 @@ select_transform_and_rename = real_estate_data_frame.select(
 ).rename({"time_since_sold": "TimeSinceSold", "price_per_sq_ft": "PricePerSqFt"})
 print("\nData with added TimeSinceSold and PricePerSqFt columns:")
 print(select_transform_and_rename.describe())
-
 
 # STEP 4: Data Analysis
 # Group and aggregate data
@@ -122,6 +136,14 @@ grouped_expansion = real_estate_data_frame.group_by("SaleCondition").agg(
 )
 print("\nGrouped data with expanded aggregation:")
 print(grouped_expansion)
+
+grouped_actual_age = real_estate_data_frame.group_by("AgeCondition").agg(
+    pl.col("id").count().alias("CountActualAge"),
+    pl.col("SalePrice").mean().alias("MeanSalesPrice"),
+    pl.col("SalePrice").median().alias("MedianSalesPrice"),
+    pl.col("SalePrice").min().alias("MinSalesPrice"),
+    pl.col("SalePrice").max().alias("MaxSalesPrice")
+)
 
 # Calculate correlation
 correlation = real_estate_data_frame.select(pl.col("SalePrice", "LotArea")).corr()

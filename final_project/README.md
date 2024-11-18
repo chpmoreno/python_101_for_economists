@@ -418,7 +418,7 @@ class Consumer:
         """
 ```
 
-##### 3.1.3.3: Implement a Simulation Class and Functions
+##### 3.1.3.4: Implement a Simulation Class and Functions
 In `simulation.py`, implement a `Simulation` class to generate Agent-Based Model simulations. The `Simulation` class orchestrates the overall market simulation. The market cleaning mechanisms are:
 
 - `INCOME_ORDER_DESCENDANT`: Highest income buyers first
