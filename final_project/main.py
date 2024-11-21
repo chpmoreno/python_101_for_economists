@@ -1,5 +1,6 @@
 from pathlib import Path
 import numpy as np
+import polars as pl
 from typing import List, Dict, Any
 import pytest
 
@@ -15,6 +16,8 @@ from real_estate_toolkit.agent_based_model.simulation import (
     AnnualIncomeStatistics,
     ChildrenRange
 )
+from real_estate_toolkit.ml_models.predictor import HousePricePredictor
+from real_estate_toolkit.analytics.exploratory import MarketAnalyzer
 
 def test_data_loading_and_cleaning():
     """Test data loading and cleaning functionality"""
@@ -205,16 +208,129 @@ def test_simulation(cleaned_data: List[Dict[str, Any]]):
     availability_rate = simulation.compute_houses_availability_rate()
     assert 0 <= availability_rate <= 1, "Houses availability rate should be between 0 and 1"
 
+def test_market_analyzer():
+    """Test the functionality of the MarketAnalyzer class."""
+    
+    # Path to the dataset
+    data_path = Path("files/ames_housing.csv")
+
+    # Initialize the analyzer
+    analyzer = MarketAnalyzer(data_path=str(data_path))
+
+    # Step 1: Test data cleaning
+    print("Testing data cleaning...")
+    try:
+        analyzer.clean_data()
+        assert analyzer.real_state_clean_data is not None, "Data cleaning failed: Cleaned data is None."
+        print("Data cleaning passed!")
+    except Exception as e:
+        print(f"Data cleaning failed: {e}")
+        return
+
+    # Step 2: Test price distribution analysis
+    print("Testing price distribution analysis...")
+    try:
+        price_stats = analyzer.generate_price_distribution_analysis()
+        assert isinstance(price_stats, pl.DataFrame), "Price distribution stats should be a Polars DataFrame."
+        print("Price distribution analysis passed!")
+    except Exception as e:
+        print(f"Price distribution analysis failed: {e}")
+        return
+
+    # Step 3: Test neighborhood price comparison
+    print("Testing neighborhood price comparison...")
+    try:
+        neighborhood_stats = analyzer.neighborhood_price_comparison()
+        assert isinstance(neighborhood_stats, pl.DataFrame), "Neighborhood stats should be a Polars DataFrame."
+        print("Neighborhood price comparison passed!")
+    except Exception as e:
+        print(f"Neighborhood price comparison failed: {e}")
+        return
+
+    # Step 4: Test correlation heatmap
+    print("Testing feature correlation heatmap...")
+    try:
+        numerical_variables = ["SalePrice", "GrLivArea", "YearBuilt", "OverallQual"]
+        analyzer.feature_correlation_heatmap(variables=numerical_variables)
+        print("Feature correlation heatmap passed!")
+    except Exception as e:
+        print(f"Feature correlation heatmap failed: {e}")
+        return
+
+    # Step 5: Test scatter plots
+    print("Testing scatter plots...")
+    try:
+        scatter_plots = analyzer.create_scatter_plots()
+        assert isinstance(scatter_plots, dict), "Scatter plots should be returned as a dictionary of Plotly figures."
+        assert all(isinstance(fig, go.Figure) for fig in scatter_plots.values()), "All scatter plot values should be Plotly figures."
+        print("Scatter plots passed!")
+    except Exception as e:
+        print(f"Scatter plots failed: {e}")
+        return
+
+def test_house_price_predictor():
+    """Test the functionality of the HousePricePredictor class."""
+
+    # Paths to the datasets
+    train_data_path = Path("files/train.csv")
+    test_data_path = Path("files/test.csv")
+
+    # Initialize predictor
+    predictor = HousePricePredictor(train_data_path=str(train_data_path), test_data_path=str(test_data_path))
+
+    # Step 1: Test data cleaning
+    print("Testing data cleaning...")
+    try:
+        predictor.clean_data()
+        print("Data cleaning passed!")
+    except Exception as e:
+        print(f"Data cleaning failed: {e}")
+        return
+
+    # Step 2: Test feature preparation
+    print("Testing feature preparation...")
+    try:
+        predictor.prepare_features(target_column="SalePrice")
+        print("Feature preparation passed!")
+    except Exception as e:
+        print(f"Feature preparation failed: {e}")
+        return
+
+    # Step 3: Test model training
+    print("Testing model training...")
+    try:
+        results = predictor.train_baseline_models()
+        for model_name, result in results.items():
+            metrics = result["metrics"]
+            print(f"{model_name} - Metrics:")
+            for metric, value in metrics.items():
+                print(f"  {metric}: {value}")
+        print("Model training passed!")
+    except Exception as e:
+        print(f"Model training failed: {e}")
+        return
+
+    # Step 4: Test forecasting
+    print("Testing forecasting...")
+    try:
+        predictor.forecast_sales_price(model_type="Linear Regression")
+        print("Forecasting passed!")
+    except Exception as e:
+        print(f"Forecasting failed: {e}")
+        return
+
 def main():
     """Main function to run all tests"""
     try:
         # Run all tests sequentially
         cleaned_data = test_data_loading_and_cleaning()
-        numeric_columns = test_descriptive_statistics(cleaned_data)
+        test_descriptive_statistics(cleaned_data)
         house = test_house_functionality()
         market = test_market_functionality(house)
-        consumer = test_consumer_functionality(market)
+        test_consumer_functionality(market)
         test_simulation(cleaned_data)
+        test_market_analyzer()
+        test_house_price_predictor()
         
         print("All tests passed successfully!")
         return 0

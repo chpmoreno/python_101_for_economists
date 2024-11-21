@@ -13,6 +13,7 @@ The project will use the Ames Housing dataset. This dataset covers a wealth of f
 - Implement data analysis workflows
 - Practice clean code principles and type hints
 - Utilize modern data analysis libraries
+- Implement machine learning pipelines
 
 ### 1.2 Delivery date:
 Students must submit their final project by Sunday, December 15, 2024, before 23:59:59.
@@ -530,8 +531,303 @@ class Simulation:
 
 ### 3.2 Part 2 (50%): House Market Analytics and Forecasting - Use Python for Data Analytics and Machine Learning
 
-Coming Soon ...
+#### Final Project Structure
+```
+real_estate_toolkit/
+├── pyproject.toml
+├── README.md
+├── .venv/
+└── src/
+    └── real_estate_toolkit/
+        ├── __init__.py
+        ├── data/
+        │   ├── __init__.py
+        │   ├── loader.py
+        │   ├── cleaner.py
+        │   └── descriptor.py
+        ├── agent_based_model/
+        │   ├── __init__.py
+        │   ├── consumers.py
+        │   ├── houses.py
+        │   ├── house_market.py
+        │   └── simulation.py
+        ├── analytics/
+        │   ├── __init__.py
+        │   ├── outputs/
+        │   │   ├── (output 1 name).html
+        │   │   ├── (output 2 name).html
+        │   │   └── (output ... name).html
+        │   └── exploratory.py
+        ├── ml_models/
+        │   ├── __init__.py
+        │   └── predictor.py
+        └── main.py
+```
+
+
+### 3.2.1 Data Analysis with Polars and Plotly (20%)
+
+Create a new folder `src/real_estate_toolkit/analytics`. For graphs use an output folder `src/real_estate_toolkit/analytics/outputs/`. Use best practices for naming output files.
+
+#### 3.2.1.1 Data Preparation and Exploratory Data Analysis
+
+Create a new module `src/real_estate_toolkit/analytics/exploratory.py` with the following requirements:
+
+```python
+from typing import List, Dict, Any, Optional
+import polars as pl
+import plotly.express as px
+
+
+class MarketAnalyzer:
+    def __init__(self, data_path: str):
+        """
+        Initialize the analyzer with data from a CSV file.
+        
+        Args:
+            data_path (str): Path to the Ames Housing dataset
+        """
+        self.real_state_data = pl.read_csv(...)
+        self.real_state_clean_data = None
+    
+    def clean_data(self) -> None:
+        """
+        Perform comprehensive data cleaning:
+        
+        Tasks to implement:
+        1. Identify and handle missing values
+            - Decide strategy for each column (drop, fill with mean/median, no change)
+        2. Convert columns to appropriate data types if needed.
+            - Ensure numeric columns are numeric
+            - Ensure categorical columns are categorized
+        
+        Returns:
+            Cleaned and preprocessed dataset assigned to self.real_state_clean_data
+        """
+    
+    def generate_price_distribution_analysis(self) -> pl.DataFrame:
+        """
+        Analyze sale price distribution using clean data.
+        
+        Tasks to implement:
+        1. Compute basic price statistics and generate another data frame called price_statistics:
+            - Mean
+            - Median
+            - Standard deviation
+            - Minimum and maximum prices
+        2. Create an interactive histogram of sale prices using Plotly.
+        
+        Returns:
+            - Statistical insights dataframe
+            - Save Plotly figures for price distribution in src/real_estate_toolkit/analytics/outputs/ folder.
+        """
+    
+    def neighborhood_price_comparison(self) -> pl.DataFrame:
+        """
+        Create a boxplot comparing house prices across different neighborhoods.
+        
+        Tasks to implement:
+        1. Group data by neighborhood
+        2. Calculate price statistics for each neighborhood
+        3. Create Plotly boxplot with:
+            - Median prices
+            - Price spread
+            - Outliers
+        
+        Returns:
+            - Return neighborhood statistics dataframe
+            - Save Plotly figures for neighborhood price comparison in src/real_estate_toolkit/analytics/outputs/ folder.
+        """
+    
+    def feature_correlation_heatmap(self, variables: List[str]) -> None:
+        """
+        Generate a correlation heatmap for variables input.
+        
+        Tasks to implement:
+        1. Pass a list of numerical variables
+        2. Compute correlation matrix and plot it
+        
+        Args:
+            variables (Lis[str]): List of variables to correlate
+        
+        Returns:
+            Save Plotly figures for correlation heatmap in src/real_estate_toolkit/analytics/outputs/ folder.
+        """
+    
+    def create_scatter_plots(self) -> Dict[str, go.Figure]:
+        """
+        Create scatter plots exploring relationships between key features.
+        
+        Scatter plots to create:
+        1. House price vs. Total square footage
+        2. Sale price vs. Year built
+        3. Overall quality vs. Sale price
+        
+        Tasks to implement:
+        - Use Plotly Express for creating scatter plots
+        - Add trend lines
+        - Include hover information
+        - Color-code points based on a categorical variable
+        - Save them in in src/real_estate_toolkit/analytics/outputs/ folder.
+        
+        Returns:
+            Dictionary of Plotly Figure objects for different scatter plots. 
+        """
+```
+
+### 3.2.2 Machine Learning Models with Scikit-Learn (30%)
+
+#### 3.2.2.1 Predictive Modeling Module
+
+Create `src/real_estate_toolkit/ml_models/predictor.py`.
+
+```python
+from typing import List, Dict, Any
+# Modules you can use (not all are mandatory):
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.metrics import (
+    mean_squared_error,
+    mean_absolute_error,
+    r2_score,
+    mean_absolute_percentage_error
+)
+import polars as pl  # Polars should be used for data handling.
+
+
+class HousePricePredictor:
+    def __init__(self, train_data_path: str, test_data_path: str):
+        """
+        Initialize the predictor class with paths to the training and testing datasets.
+        
+        Args:
+            train_data_path (str): Path to the training dataset CSV file.
+            test_data_path (str): Path to the testing dataset CSV file.
+        
+        Attributes to Initialize:
+            - self.train_data: Polars DataFrame for the training dataset.
+            - self.test_data: Polars DataFrame for the testing dataset.
+        """
+        self.train_data = pl.read_csv(train_data_path)
+        self.test_data = pl.read_csv(test_data_path)
+    
+    def clean_data(self):
+        """
+        Perform comprehensive data cleaning on the training and testing datasets.
+        
+        Tasks:
+        1. Handle Missing Values:
+            - Use a strategy for each column: drop, fill with mean/median/mode, or create a separate category.
+        2. Ensure Correct Data Types:
+            - Convert numeric columns to float/int.
+            - Convert categorical columns to string.
+        3. Drop Unnecessary Columns:
+            - Identify and remove columns with too many missing values or irrelevant information.
+        
+        Tips:
+            - Use Polars for data manipulation.
+            - Implement a flexible design to allow column-specific cleaning strategies.
+        """
+    
+    def prepare_features(self, target_column: str = 'SalePrice', selected_predictors: List[str] = None):
+        """
+        Prepare the dataset for machine learning by separating features and the target variable, 
+        and preprocessing them for training and testing.
+
+        Args:
+            target_column (str): Name of the target variable column. Default is 'SalePrice'.
+            selected_predictors (List[str]): Specific columns to use as predictors. 
+                                            If None, use all columns except the target.
+
+        Tasks:
+        1. Separate Features and Target:
+            - Split the dataset into predictors (`X`) and target variable (`y`).
+            - Use `selected_predictors` if provided; otherwise, use all columns except the target.
+        2. Split Numeric and Categorical Features:
+            - Identify numeric and categorical columns.
+        3. Create a Preprocessing Pipeline:
+            - Numeric Data: Impute missing values with the mean and standard scale the features.
+            - Categorical Data: Impute missing values with a new category and apply one-hot encoding.
+            - Use `ColumnTransformer` to combine both pipelines.
+        4. Split Data:
+            - Split the data into training and testing sets using `train_test_split`.
+
+        Returns:
+            - X_train, X_test, y_train, y_test: Training and testing sets.
+        """
+
+    def train_baseline_models(self) -> Dict[str, Dict[str, float]]:
+        """
+        Train and evaluate baseline machine learning models for house price prediction.
+        
+        Models:
+        1. Linear Regression
+        2. Choose One Advanced Model:
+            - RandomForestRegressor
+            - GradientBoostingRegressor
+
+        Tasks:
+        1. Create a Pipeline for Each Model:
+            - Combine preprocessing and the estimator into a single pipeline.
+        2. Train Models:
+            - Train each model on the training set.
+        3. Evaluate Models:
+            - Use metrics: Mean Squared Error (MSE), Mean Absolute Error (MAE), R-squared (R²), 
+            and Mean Absolute Percentage Error (MAPE).
+            - Compute metrics on both training and test sets for comparison.
+        4. Summarize Results:
+            - Return a dictionary of model names and their evaluation metrics and the model itself.
+
+        Returns:
+            A dictionary structured like:
+                {
+                    "Linear Regression": 
+                        { 
+                            "metrics": {"MSE": ..., "R2": ..., "MAE": ..., "MAPE": ...},
+                            "model": (model object)
+                        },
+                    "Advanced Model":
+                        { 
+                            "metrics": {"MSE": ..., "R2": ..., "MAE": ..., "MAPE": ...},
+                            "model": (model object)
+                        }
+                }
+        """
+    
+    def forecast_sales_price(self, model_type: str = 'LinearRegression'):
+        """
+        Use the trained model to forecast house prices on the test dataset.
+        
+        Args:
+            model_type (str): Type of model to use for forecasting. Default is 'LinearRegression'. Other option is 'Advanced'.
+        
+        Tasks:
+            1. Select the Desired Model:
+                - Ensure the model type is trained and available.
+            2. Generate Predictions:
+                - Use the selected model to predict house prices for the test set.
+            3. Create a Submission File:
+                - Save predictions in the required format:
+                    - A CSV with columns: "Id" (from test data) and "SalePrice" (predictions).
+                - Example:
+                    
+                    Id,SalePrice
+                    1461,200000
+                    1462,175000
+                
+            4. Save the File:
+                - Name the file `submission.csv` and save it in the `src/real_estate_toolkit/ml_models/outputs/` folder.
+
+        Tips:
+            - Ensure preprocessing steps are applied to the test data before making predictions.
+        """
+```
 
 ## 4. Evaluation via main.py
 
-I will use the main.py file in this repo. This main.py file should run without errors as the main file in your project. If it is not the case the project will be reviewed file by file but the grade will be affected considerably.
+I will use the main.py file in this repo. This main.py file should run without errors as the main file in your project. If it is not the case the project will be reviewed file by file; here the grade will be "more" subjective.
