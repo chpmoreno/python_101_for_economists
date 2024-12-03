@@ -471,7 +471,6 @@ class Simulation:
         Implementation tips:
         - Convert raw data to House objects
         - Validate input data
-        - Use a for loop for create the List[Consumers] object needed to use the housing market.
         - Assign self.housing_market to the class.
         """
 
