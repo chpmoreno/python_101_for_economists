@@ -1,10 +1,8 @@
 "Main module for running tests"
 from pathlib import Path
 from typing import List, Dict, Any
-import numpy as np
 import polars as pl
 import plotly.graph_objects as go
-import pytest
 
 from real_estate_toolkit.data.loader import DataLoader
 from real_estate_toolkit.data.cleaner import Cleaner
