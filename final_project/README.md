@@ -72,6 +72,11 @@ real_estate_toolkit/
 ├── pyproject.toml
 ├── README.md
 ├── .venv/
+├── files
+|   ├── data_description.txt
+|   ├── sample_submission.csv
+|   ├── test.csv
+|   └── train.csv 
 └── src/
     └── real_estate_toolkit/
         ├── __init__.py
@@ -573,9 +578,10 @@ Create a new folder `src/real_estate_toolkit/analytics`. For graphs use an outpu
 Create a new module `src/real_estate_toolkit/analytics/exploratory.py` with the following requirements:
 
 ```python
-from typing import List, Dict, Any, Optional
+from typing import List, Dict
 import polars as pl
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 class MarketAnalyzer:
@@ -829,4 +835,77 @@ class HousePricePredictor:
 
 ## 4. Evaluation via main.py
 
-I will use the main.py file in this repo. This main.py file should run without errors as the main file in your project. If it is not the case the project will be reviewed file by file; here the grade will be "more" subjective.
+### Overview
+The `main.py` file provided in the repository serves as a reference implementation and evaluation framework.
+
+### Purpose of main.py
+The main file demonstrates:
+* The expected interaction patterns between project components
+* Basic workflow implementation
+* Testing procedures for functionality verification
+* Integration of different modules
+* Expected input/output patterns
+
+### Flexibility in Implementation
+While maintaining core functionality, you can:
+
+#### Allowed Modifications
+* Adjust function signatures for better design
+* Add helper functions
+* Enhance error handling
+* Improve testing procedures
+* Modify variable names for clarity
+* Add documentation
+* Implement additional validation
+
+#### Guidelines
+* Preserve the basic testing objectives
+* Maintain core functionality described in requirements
+* Keep the general structure of component interactions
+* Ensure modifications align with project goals
+
+### Evaluation Process
+
+#### Primary Evaluation Path
+The first attempt at evaluation will use your implementation with the provided main file:
+* Testing overall project integration
+* Verifying component interactions
+* Assessing implementation completeness
+
+#### Alternative Evaluation Path
+If the main file execution encounters issues, evaluation proceeds through:
+* Individual function assessment
+* Component-level functionality review
+* Analysis of implemented solutions
+* Code quality evaluation
+* Documentation review
+
+### Important Considerations
+
+#### Focus Areas
+* Understanding core requirements
+* Implementing solutions
+* Providing clear documentation
+* Maintaining code quality
+* Demonstrating problem-solving ability
+
+#### Remember
+* The main file is a guideline, not a strict requirement
+* Your understanding and implementation are key
+* Creative solutions are welcome
+* Quality and functionality matter more than exact matching
+
+### Recommendations
+
+#### Development Approach
+1. Study the requirements thoroughly
+2. Implement components independently
+3. Test functions separately
+4. Document your implementation choices
+5. Integrate with main file where feasible
+6. Note any deviations from reference implementation
+
+#### Documentation
+* Comment your code appropriately
+* Explain significant modifications
+* Document known limitations
